@@ -6,7 +6,16 @@ project(CurlSSLMinimal)
 add_executable(${PROJECT_NAME} "main.cpp")
 
 if(WIN32)
-    target_link_libraries(${PROJECT_NAME} -lcurl -lnettle -lhogweed -lgmp)
+    execute_process(
+        COMMAND ${PKG_CONFIG_EXECUTABLE} libcurl --libs
+        OUTPUT_VARIABLE CURL_LIBS
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+
+message(${CURL_LIBS})
+message(${PKG_CONFIG_EXECUTABLE})
+
+target_link_libraries(${PROJECT_NAME} ${CURL_LIBS})
 else()
     target_link_libraries(${PROJECT_NAME} -lcurl)
 endif(WIN32)
