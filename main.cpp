@@ -48,6 +48,7 @@ std::string GetFileFromHTTPS(const std::string &url) {
     curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 1L); // verify ssl hostname
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION,
                      CurlWrite_CallbackFunc_StdString);
+    curl_easy_setopt(curl, CURLOPT_USERAGENT, "Dark Secret Ninja/1.0");
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &s);
     curl_easy_setopt(curl, CURLOPT_NOPROGRESS, true);
 
