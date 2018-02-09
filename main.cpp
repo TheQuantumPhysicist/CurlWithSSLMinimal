@@ -1,6 +1,7 @@
 #include <iostream>
 #include <deque>
 #include <sstream>
+#include <string>
 
 #define CURL_STATICLIB
 #include <curl/curl.h>
@@ -42,7 +43,6 @@ std::string GetFileFromHTTPS(const std::string &url) {
   curl = curl_easy_init();
   std::deque<char> s;
   if (curl) {
-
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
     curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 1L); // verify ssl peer
     curl_easy_setopt(curl, CURLOPT_SSL_VERIFYHOST, 1L); // verify ssl hostname
@@ -61,7 +61,7 @@ std::string GetFileFromHTTPS(const std::string &url) {
       long http_response_code;
       curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &http_response_code);
       if (http_response_code != 200) {
-        throw std::runtime_error("Error retrieving data with https protocol. "
+        throw std::runtime_error("Error retrieving data with https protocol, error . " + std::to_string(http_response_code) +
                                  "Probably the URL is invalid.");
       }
     }
